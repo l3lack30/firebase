@@ -1,46 +1,44 @@
 <template>
-  <div class="container" id="App" style="bac">
-    <br>
-    <div class="row">
-      <h1 class="text-white">My Menu</h1>
-      <div class="card" style="width: 20rem; background-color: #FFF8EA;" v-for="menu in foodmenu">
-        <div class="card-body">
-          <h4 class="card-title">{{ menu.nameTH }}</h4>
-          <h5>{{ menu.nameEng }}</h5>
-          <h6>ราคา: {{ menu.price }} บาท</h6>
-          <h6>{{ menu.detial }}</h6>
+  <div class="vh-auto" style="background: #9E7676">
+    <div class="container">
+      <div class="row">
+        <h1 class="mymenu">My Menu</h1>
+        <div class="card" style="width: 20rem;" v-for="menu in foodmenu">
+          <div class="card-body">
+            <h4 class="card-title">{{ menu.nameTH }}</h4>
+            <h5>{{ menu.nameEng }}</h5>
+            <h6>ราคา: {{ menu.price }} บาท</h6>
+            <h6>{{ menu.detial }}</h6>
+          </div>
         </div>
+
+        <div class="mymenu">
+          <div>
+            <h2>Add Menu</h2>
+          </div>
+          <div>
+            <p><input type="text" placeholder="ชื่อภาษาไทย" class="form-control" ref="t"></p>
+            <p><input type="text" placeholder="ชื่อภาฺษาอังกฤษ" class="form-control" ref="e"></p>
+            <p><input type="number" placeholder="ราคา" class="form-control" ref="p"></p>
+            <p><input type="text" placeholder="รายละเอียด" class="form-control" ref="d"></p>
+          </div>
+          <button class="btn btn-dark" @click="addMenu">ADD</button>
+        </div>
+
+        <div class="add">
+          <h2 class="mymenu">Update/Delete</h2>
+          <div v-for="menu in foodmenu">
+            <input v-model="menu.nameTH" type="text">
+            <input v-model="menu.nameEng" type="text">
+            <input v-model="menu.price" type="text">
+            <input v-model="menu.detial" type="text">
+            <button class="btn btn-primary" @click="updateMenu(menu)">UPDATE</button>
+            <button class="btn btn-danger" @click="deleteMenu(menu.id)">DELETE</button>
+          </div>
+        </div>
+
       </div>
     </div>
-    <br>
-
-    <div v-for="menu in foodmenu">
-      <input v-model="menu.nameTH" type="text">
-      <input v-model="menu.nameEng" type="text">
-      <input v-model="menu.price" type="text">
-      <input v-model="menu.detial" type="text">
-
-      <button class="btn btn-success" @click="updateMenu(menu)">UPDATE</button>
-      <button class="btn btn-danger" @click="deleteMenu(menu.id)">DELETE</button>
-    </div>
-    <br>
-
-    <div class="nameTH">
-      <input type="text" placeholder="" class="form-control" ref="t">
-    </div>
-
-    <div class="nameEng">
-      <input type="text" placeholder="" class="form-control" ref="e">
-    </div>
-    <div class="price">
-      <input type="number" placeholder="" class="form-control" ref="p">
-    </div>
-    <div class="detial">
-      <input type="text" placeholder="" class="form-control" ref="d">
-    </div>
-
-    <button class="btn btn-dark" @click="addMenu">ADD</button>
-
   </div>
 </template>
 
@@ -90,7 +88,7 @@ export default {
   },
   mounted() {
     const latestQuery = query(collection(db, "foodmenu"));
-    const livemessages = onSnapshot(latestQuery, (snapshot) => {
+    onSnapshot(latestQuery, (snapshot) => {
       this.foodmenu = snapshot.docs.map((doc) => {
         return {
           id: doc.id,
@@ -108,10 +106,23 @@ export default {
 <style>
 #app {
   font-family: 'Kanit', sans-serif;
-  background-color: #9E7676;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.mymenu {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #FFF;
+}
+
+.card {
+  margin: 5px;
+}
+
+.add {
+  margin-bottom: 50px;
 }
 </style>
