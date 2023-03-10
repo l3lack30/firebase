@@ -1,13 +1,16 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": "./dist/my-app-name",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
-  },
-  "storage": {
-    "rules": "sroeage.rules"
   }
 }
