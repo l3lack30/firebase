@@ -1,85 +1,62 @@
-<script setup>
-import { RouterLink, RouterView } from "vue-router";
-</script>
-
 <template>
-  <header>
-    
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/feed">Feed</RouterLink>
-        <RouterLink to="/register">Register</RouterLink>
-        <RouterLink to="/sign-in">Login</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <nav style="background: #594545">
+    <div class="nav-s"><RouterLink to="/">Home</RouterLink></div>
+    <div class="nav-s"><RouterLink to="/feed" v-if="LoggedIn">Menu</RouterLink></div>
+    <div class="nav-s"><RouterLink to="/login">Login</RouterLink></div>
+    <div class="nav-s"><RouterLink to="/register">Register</RouterLink></div>
+    <button @click="Logout" v-if="LoggedIn" class="btn btn-secondary" >LogOut</button>
+  </nav>
+    <RouterView />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup>
+import "../firebase";
+import { onMounted, ref } from "vue";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useRouter } from "vue-router";
+import { RouterLink, RouterView } from "vue-router";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const router = useRouter();
+const LoggedIn = ref(false);
 
+let auth;
+onMounted(() => {
+  auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      LoggedIn.value = true;
+    } else {
+      LoggedIn.value = false;
+    }
+  });
+});
+
+
+const Logout = () => {
+  signOut(auth).then(() => {
+    router.push("/")
+  })
+};
+
+</script>
+
+<style>
 nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  display: flex;
+  align-items: right;
+  justify-content: right;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.nav-s {
+  color: #FFF;
+  padding: 15px 20px;
+  position: relative;
+  text-align: right;
+  border-bottom: 3px solid transparent;
+  display: flex;
+  transition: 0.4s;
 }
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.nav-s a {
+  color: inherit;
+  text-decoration: none;
 }
 </style>

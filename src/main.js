@@ -1,12 +1,10 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import "./firebase"
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
 
-import "./assets/main.css"
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.min.js'
 
-const app  = createApp(App);
+import { CAlert } from '@coreui/bootstrap-vue';
 
-app.use(router);
-
-app.mount("#app")
+createApp(App).use(router).mount('#app')
