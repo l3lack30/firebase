@@ -2,7 +2,7 @@
   <div class="container" id="App" style="bac">
     <br>
     <div class="row">
-      <h1 class="">My Menu</h1>
+      <h1 class="text-white">My Menu</h1>
       <div class="card" style="width: 20rem; background-color: #FFF8EA;" v-for="menu in foodmenu">
         <div class="card-body">
           <h4 class="card-title">{{ menu.nameTH }}</h4>
