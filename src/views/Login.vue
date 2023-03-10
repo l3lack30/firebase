@@ -33,7 +33,8 @@ const login = () => {
             const user = data.user;
             console.log("LoggedIn" + user);
             console.log(auth.currentUser);
-            router.push("/feed")
+            router.push("/menu")
+            alert("LoggedIn")
         })
         .catch((error) => {
             console.log(error.code);
@@ -59,7 +60,7 @@ const signInWithGoogle = () => {
     signInWithPopup(getAuth(), provider)
         .then((result) => {
             console.log(result.user);
-            router.push("/feed");
+            router.push("/menu");
         })
         .catch((error) => {
         })

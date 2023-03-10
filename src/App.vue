@@ -1,10 +1,13 @@
 <template>
   <nav style="background: #594545">
     <div class="nav-s"><RouterLink to="/">Home</RouterLink></div>
-    <div class="nav-s"><RouterLink to="/feed" v-if="LoggedIn">Menu</RouterLink></div>
-    <div class="nav-s"><RouterLink to="/login">Login</RouterLink></div>
-    <div class="nav-s"><RouterLink to="/register">Register</RouterLink></div>
-    <button @click="Logout" v-if="LoggedIn" class="btn btn-secondary" >LogOut</button>
+    <div class="nav-s"><RouterLink to="/menu" v-if="LoggedIn">Menu</RouterLink></div>
+    <div class="nav-s" @click ="Logout" v-if="LoggedIn">LogOut</div>
+    <div class="nav-s"><RouterLink to="/login" v-if="LoggedIn == null">Login</RouterLink></div>
+    <div class="nav-s"><RouterLink to="/register" v-if="LoggedIn == null">Register</RouterLink></div>
+    
+    
+    
   </nav>
     <RouterView />
 </template>
@@ -24,9 +27,9 @@ onMounted(() => {
   auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      LoggedIn.value = true;
+      LoggedIn.value = user;
     } else {
-      LoggedIn.value = false;
+      LoggedIn.value = null;
     }
   });
 });
@@ -35,6 +38,7 @@ onMounted(() => {
 const Logout = () => {
   signOut(auth).then(() => {
     router.push("/")
+    alert("LogOut!")
   })
 };
 
@@ -48,12 +52,12 @@ nav {
 }
 .nav-s {
   color: #FFF;
-  padding: 15px 20px;
+  margin: 15px;
   position: relative;
-  text-align: right;
   border-bottom: 3px solid transparent;
   display: flex;
   transition: 0.4s;
+  cursor:pointer;
 }
 .nav-s a {
   color: inherit;

@@ -32,8 +32,8 @@
             <input v-model="menu.nameEng" type="text">
             <input v-model="menu.price" type="text">
             <input v-model="menu.detial" type="text">
-            <button class="btn btn-primary" @click="updateMenu(menu)">UPDATE</button>
-            <button class="btn btn-danger" @click="deleteMenu(menu.id)">DELETE</button>
+            <button class="up btn btn-warning" @click="updateMenu(menu)">UPDATE</button>
+            <button class="de btn btn-danger" @click="deleteMenu(menu.id)">DELETE</button>
           </div>
         </div>
 
@@ -124,5 +124,9 @@ export default {
 
 .add {
   margin-bottom: 50px;
+}
+
+.up {
+  margin: 5px;
 }
 </style>
